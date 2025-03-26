@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		82DD23F92D94379300DEEC9A /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 82DD23F82D94379300DEEC9A /* FirebaseAuth */; };
 		82DD23FB2D94379300DEEC9A /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = 82DD23FA2D94379300DEEC9A /* FirebaseCore */; };
+		82DD24132D943D9800DEEC9A /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 82DD24122D943D9800DEEC9A /* FirebaseFirestore */; };
+		82DD24152D943D9800DEEC9A /* FirebaseFirestoreCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = 82DD24142D943D9800DEEC9A /* FirebaseFirestoreCombine-Community */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,7 +60,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				82DD23FB2D94379300DEEC9A /* FirebaseCore in Frameworks */,
+				82DD24152D943D9800DEEC9A /* FirebaseFirestoreCombine-Community in Frameworks */,
 				82DD23F92D94379300DEEC9A /* FirebaseAuth in Frameworks */,
+				82DD24132D943D9800DEEC9A /* FirebaseFirestore in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -121,6 +125,8 @@
 			packageProductDependencies = (
 				82DD23F82D94379300DEEC9A /* FirebaseAuth */,
 				82DD23FA2D94379300DEEC9A /* FirebaseCore */,
+				82DD24122D943D9800DEEC9A /* FirebaseFirestore */,
+				82DD24142D943D9800DEEC9A /* FirebaseFirestoreCombine-Community */,
 			);
 			productName = TripTribe;
 			productReference = 82DD23C82D94350100DEEC9A /* TripTribe.app */;
@@ -592,6 +598,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 82DD23F72D9436CF00DEEC9A /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseCore;
+		};
+		82DD24122D943D9800DEEC9A /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 82DD23F72D9436CF00DEEC9A /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
+		};
+		82DD24142D943D9800DEEC9A /* FirebaseFirestoreCombine-Community */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 82DD23F72D9436CF00DEEC9A /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = "FirebaseFirestoreCombine-Community";
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
