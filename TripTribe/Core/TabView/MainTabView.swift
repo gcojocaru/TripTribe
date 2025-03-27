@@ -9,8 +9,8 @@ import SwiftUI
 
 struct MainTabView: View {
     @EnvironmentObject var authViewModel: AuthViewModel
+    @EnvironmentObject var tripsViewModel: TripsViewModel
     @State private var selectedTab = 0
-    
     
     var body: some View {
         TabView(selection: $selectedTab) {
@@ -25,6 +25,11 @@ struct MainTabView: View {
                 .tag(0)
             
             TripsView()
+                .onAppear{
+                    Task {
+                       await tripsViewModel.fetchInvitations()
+                    }
+                }
                 .tabItem {
                     VStack {
                         Image(systemName: "airplane")
@@ -32,6 +37,7 @@ struct MainTabView: View {
                         Text("Trips")
                     }
                 }
+                .badge(tripsViewModel.invitations.count > 0 ? tripsViewModel.invitations.count : 0)
                 .tag(1)
             
             ProfileView()
@@ -45,6 +51,12 @@ struct MainTabView: View {
                 .tag(2)
         }
         .tint(.black)
+        .onAppear {
+            // Check for invitations when the app appears
+            Task {
+                await tripsViewModel.fetchInvitations()
+            }
+        }
     }
 }
 

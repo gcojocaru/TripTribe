@@ -21,11 +21,13 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 struct TripTribeApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     @StateObject private var authViewModel = AuthViewModel()
+    @StateObject private var tripsViewModel = TripsViewModel()
 
     var body: some Scene {
         WindowGroup {
             ContentView()
                 .environmentObject(authViewModel)
+                .environmentObject(tripsViewModel)
         }
     }
 }
