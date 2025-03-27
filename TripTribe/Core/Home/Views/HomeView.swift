@@ -6,16 +6,25 @@
 //
 import SwiftUI
 
-// (placeholder)
-struct HomeView: View {
+struct HomeView<ViewModel: HomeViewModel>: View {
+    @ObservedObject var viewModel: ViewModel
+    @State var authUsername: String = "Traveler"
+    
     var body: some View {
         NavigationView {
-            VStack {
-                Text("Home Screen")
-                    .font(.largeTitle)
-                    .fontWeight(.bold)
+            EmptyHomeView(username: authUsername) {
+                viewModel.addTrip()
             }
-            .navigationTitle("Home")
+            .navigationBarTitle("", displayMode: .inline)
+            .navigationBarHidden(true)
+            .fullScreenCover(isPresented: Binding<Bool>(
+                get: { viewModel.isShowingNewTripView },
+                set: { newValue in
+                    viewModel.isShowingNewTripView = newValue
+                }
+            )) {
+                NewTripView(viewModel: NewTripViewModel(onDismiss: {viewModel.isShowingNewTripView = false}))
+            }
         }
     }
 }

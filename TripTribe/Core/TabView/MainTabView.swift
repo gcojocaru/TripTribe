@@ -14,7 +14,7 @@ struct MainTabView: View {
     
     var body: some View {
         TabView(selection: $selectedTab) {
-            HomeView()
+            HomeView(viewModel: HomeViewModelImpl(), authUsername: authViewModel.user?.displayName ?? "")
                 .tabItem {
                     VStack {
                         Image(systemName: selectedTab == 0 ? "house.fill" : "house")

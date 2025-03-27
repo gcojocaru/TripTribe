@@ -27,7 +27,7 @@ struct AuthenticationView: View {
                     
                     VStack(spacing: 24) {
                         Text("Group travel, simplified")
-                            .font(.system(size: 28, weight: .bold))
+                            .font(.jakartaSans(28, weight: .bold))
                             .padding(.bottom, 10)
                         
                         if showingSignUp {
@@ -39,7 +39,7 @@ struct AuthenticationView: View {
                         }
                         
                         Text("v0.1.2 | Privacy Policy")
-                            .font(.footnote)
+                            .font(.jakartaSans(14, weight: .bold))
                             .foregroundColor(.secondary)
                             .padding(.top, 50)
                             .padding(.bottom, 10)

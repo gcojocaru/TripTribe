@@ -43,7 +43,7 @@ struct SignInView: View {
                     isShowingForgotPassword = true
                 } label: {
                     Text("Forgot password?")
-                        .font(.footnote)
+                        .font(.jakartaSans(14))
                         .foregroundColor(.gray)
                 }
             }
@@ -63,7 +63,7 @@ struct SignInView: View {
                         .cornerRadius(28)
                 } else {
                     Text("Log In")
-                        .fontWeight(.semibold)
+                        .font(.jakartaSans(16, weight: .bold))
                         .foregroundColor(.white)
                         .frame(maxWidth: .infinity)
                         .frame(height: 56)
@@ -81,7 +81,7 @@ struct SignInView: View {
                 }
             } label: {
                 Text("Sign Up")
-                    .fontWeight(.semibold)
+                    .font(.jakartaSans(16, weight: .bold))
                     .foregroundColor(.black)
                     .frame(maxWidth: .infinity)
                     .frame(height: 56)

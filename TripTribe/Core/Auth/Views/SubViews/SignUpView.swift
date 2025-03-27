@@ -61,7 +61,7 @@ struct SignUpView: View {
                         .cornerRadius(28)
                 } else {
                     Text("Create Account")
-                        .fontWeight(.semibold)
+                        .font(.jakartaSans(22, weight: .bold))
                         .foregroundColor(.white)
                         .frame(maxWidth: .infinity)
                         .frame(height: 56)
@@ -79,7 +79,7 @@ struct SignUpView: View {
                 }
             } label: {
                 Text("Back to Login")
-                    .fontWeight(.semibold)
+                    .font(.jakartaSans(16, weight: .bold))
                     .foregroundColor(.black)
                     .frame(maxWidth: .infinity)
                     .frame(height: 56)
