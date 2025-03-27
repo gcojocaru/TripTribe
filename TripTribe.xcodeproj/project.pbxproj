@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		827FC1E12D9552B3000908A0 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 827FC1E02D9552B3000908A0 /* FirebaseStorage */; };
+		827FC1E32D9552B3000908A0 /* FirebaseStorageCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = 827FC1E22D9552B3000908A0 /* FirebaseStorageCombine-Community */; };
+		827FC2592D9590F6000908A0 /* HorizonCalendar in Frameworks */ = {isa = PBXBuildFile; productRef = 827FC2582D9590F6000908A0 /* HorizonCalendar */; };
 		82DD23F92D94379300DEEC9A /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 82DD23F82D94379300DEEC9A /* FirebaseAuth */; };
 		82DD23FB2D94379300DEEC9A /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = 82DD23FA2D94379300DEEC9A /* FirebaseCore */; };
 		82DD24132D943D9800DEEC9A /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 82DD24122D943D9800DEEC9A /* FirebaseFirestore */; };
@@ -36,9 +39,22 @@
 		82DD23E22D94350C00DEEC9A /* TripTribeUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TripTribeUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		827FC2312D957C26000908A0 /* Exceptions for "TripTribe" folder in "TripTribe" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 82DD23C72D94350100DEEC9A /* TripTribe */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		82DD23CA2D94350100DEEC9A /* TripTribe */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				827FC2312D957C26000908A0 /* Exceptions for "TripTribe" folder in "TripTribe" target */,
+			);
 			path = TripTribe;
 			sourceTree = "<group>";
 		};
@@ -62,7 +78,10 @@
 				82DD23FB2D94379300DEEC9A /* FirebaseCore in Frameworks */,
 				82DD24152D943D9800DEEC9A /* FirebaseFirestoreCombine-Community in Frameworks */,
 				82DD23F92D94379300DEEC9A /* FirebaseAuth in Frameworks */,
+				827FC1E12D9552B3000908A0 /* FirebaseStorage in Frameworks */,
+				827FC1E32D9552B3000908A0 /* FirebaseStorageCombine-Community in Frameworks */,
 				82DD24132D943D9800DEEC9A /* FirebaseFirestore in Frameworks */,
+				827FC2592D9590F6000908A0 /* HorizonCalendar in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -127,6 +146,9 @@
 				82DD23FA2D94379300DEEC9A /* FirebaseCore */,
 				82DD24122D943D9800DEEC9A /* FirebaseFirestore */,
 				82DD24142D943D9800DEEC9A /* FirebaseFirestoreCombine-Community */,
+				827FC1E02D9552B3000908A0 /* FirebaseStorage */,
+				827FC1E22D9552B3000908A0 /* FirebaseStorageCombine-Community */,
+				827FC2582D9590F6000908A0 /* HorizonCalendar */,
 			);
 			productName = TripTribe;
 			productReference = 82DD23C82D94350100DEEC9A /* TripTribe.app */;
@@ -212,6 +234,7 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				82DD23F72D9436CF00DEEC9A /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				827FC2552D958F87000908A0 /* XCRemoteSwiftPackageReference "HorizonCalendar" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 82DD23C92D94350100DEEC9A /* Products */;
@@ -417,6 +440,7 @@
 				DEVELOPMENT_TEAM = JQTMQWC4MU;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = TripTribe/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -446,6 +470,7 @@
 				DEVELOPMENT_TEAM = JQTMQWC4MU;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = TripTribe/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -578,6 +603,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		827FC2552D958F87000908A0 /* XCRemoteSwiftPackageReference "HorizonCalendar" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/airbnb/HorizonCalendar";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 		82DD23F72D9436CF00DEEC9A /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
@@ -589,6 +622,21 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		827FC1E02D9552B3000908A0 /* FirebaseStorage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 82DD23F72D9436CF00DEEC9A /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseStorage;
+		};
+		827FC1E22D9552B3000908A0 /* FirebaseStorageCombine-Community */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 82DD23F72D9436CF00DEEC9A /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = "FirebaseStorageCombine-Community";
+		};
+		827FC2582D9590F6000908A0 /* HorizonCalendar */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 827FC2552D958F87000908A0 /* XCRemoteSwiftPackageReference "HorizonCalendar" */;
+			productName = HorizonCalendar;
+		};
 		82DD23F82D94379300DEEC9A /* FirebaseAuth */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 82DD23F72D9436CF00DEEC9A /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;

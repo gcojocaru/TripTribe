@@ -1,0 +1,23 @@
+//
+//  EmptyHomeView.swift
+//  TripTribe
+//
+//  Created by Gheorghe Cojocaru on 27.03.2025.
+//
+import SwiftUI
+
+struct EmptyHomeView: View {
+    var username: String
+    var onAddTripTap: () -> Void
+    var body: some View {
+        ScrollView {
+            VStack(alignment: .leading, spacing: 0) {
+                HeaderImageView()
+                WelcomeMessageView(username: username)
+                EmptyStateView(onAddTripTap: onAddTripTap)
+            }
+        }
+        .edgesIgnoringSafeArea(.top)
+        .background(Color(.systemBackground))
+    }
+}
