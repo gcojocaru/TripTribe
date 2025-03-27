@@ -5,6 +5,14 @@
 //  Created by Gheorghe Cojocaru on 27.03.2025.
 //
 
+
+//
+//  TripModel.swift
+//  TripTribe
+//
+//  Created by Claude on 27.03.2025.
+//
+
 import Foundation
 import Firebase
 import FirebaseFirestore
