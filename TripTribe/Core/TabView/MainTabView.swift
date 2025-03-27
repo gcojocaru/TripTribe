@@ -48,54 +48,7 @@ struct MainTabView: View {
     }
 }
 
-// HomeView.swift (placeholder)
-struct HomeView: View {
-    var body: some View {
-        NavigationView {
-            VStack {
-                Text("Home Screen")
-                    .font(.largeTitle)
-                    .fontWeight(.bold)
-            }
-            .navigationTitle("Home")
-        }
-    }
-}
 
-// TripsView.swift (placeholder)
-struct TripsView: View {
-    var body: some View {
-        NavigationView {
-            VStack {
-                Text("Trips Screen")
-                    .font(.largeTitle)
-                    .fontWeight(.bold)
-            }
-            .navigationTitle("Trips")
-        }
-    }
-}
 
-// ProfileView.swift (placeholder)
-struct ProfileView: View {
-    @EnvironmentObject var authViewModel: AuthViewModel
-    
-    var body: some View {
-        NavigationView {
-            VStack(spacing: 20) {
-                Text("Profile Screen")
-                    .font(.largeTitle)
-                    .fontWeight(.bold)
-                
-                Button("Sign Out") {
-                    authViewModel.signOut()
-                }
-                .foregroundColor(.white)
-                .padding()
-                .background(Color.red)
-                .cornerRadius(10)
-            }
-            .navigationTitle("Profile")
-        }
-    }
-}
+
+
