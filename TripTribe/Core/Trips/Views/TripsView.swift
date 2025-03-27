@@ -324,63 +324,6 @@ struct TripCardView: View {
     }
 }
 
-// Placeholder for Trip Detail View
-struct TripDetailView: View {
-    let trip: Trip
-    
-    var body: some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: 20) {
-                Text(trip.name)
-                    .font(.jakartaSans(24, weight: .bold))
-                
-                VStack(alignment: .leading, spacing: 12) {
-                    HStack {
-                        Image(systemName: "mappin.circle.fill")
-                            .foregroundColor(.gray)
-                        Text(trip.destination)
-                            .font(.jakartaSans(16, weight: .medium))
-                    }
-                    
-                    HStack {
-                        Image(systemName: "calendar")
-                            .foregroundColor(.gray)
-                        Text(formatDateRange(start: trip.startDate, end: trip.endDate))
-                            .font(.jakartaSans(16, weight: .medium))
-                    }
-                    
-                    if let description = trip.description, !description.isEmpty {
-                        Text("About")
-                            .font(.jakartaSans(18, weight: .bold))
-                            .padding(.top, 8)
-                        
-                        Text(description)
-                            .font(.jakartaSans(16, weight: .regular))
-                            .foregroundColor(.gray)
-                    }
-                    
-                    Text("Participants (\(trip.participants.count))")
-                        .font(.jakartaSans(18, weight: .bold))
-                        .padding(.top, 16)
-                    
-                    // Just a placeholder for participant list
-                    Text("Participants would be listed here")
-                        .font(.jakartaSans(16, weight: .regular))
-                        .foregroundColor(.gray)
-                }
-            }
-            .padding()
-        }
-        .navigationTitle("Trip Details")
-        .navigationBarTitleDisplayMode(.inline)
-    }
-    
-    private func formatDateRange(start: Date, end: Date) -> String {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "MMM d, yyyy"
-        return "\(formatter.string(from: start)) - \(formatter.string(from: end))"
-    }
-}
 
 struct TripsView_Previews: PreviewProvider {
     static var previews: some View {
