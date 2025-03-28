@@ -271,62 +271,9 @@ struct TripsSectionView: View {
             
             ForEach(trips) { trip in
                 NavigationLink(destination: TripDetailView(trip: trip)) {
-                    TripCardView(trip: trip)
+                    TripCardPreview(trip: trip)
                 }
             }
         }
-    }
-}
-
-struct TripCardView: View {
-    let trip: Trip
-    
-    var body: some View {
-        VStack(alignment: .leading, spacing: 12) {
-            Text(trip.name)
-                .font(.jakartaSans(18, weight: .bold))
-                .foregroundColor(.black)
-            
-            HStack {
-                Image(systemName: "mappin.circle.fill")
-                    .foregroundColor(.gray)
-                Text(trip.destination)
-                    .font(.jakartaSans(14, weight: .medium))
-                    .foregroundColor(.gray)
-            }
-            
-            HStack {
-                Image(systemName: "calendar")
-                    .foregroundColor(.gray)
-                Text(formatDateRange(start: trip.startDate, end: trip.endDate))
-                    .font(.jakartaSans(14, weight: .medium))
-                    .foregroundColor(.gray)
-            }
-            
-            HStack {
-                Image(systemName: "person.2.fill")
-                    .foregroundColor(.gray)
-                Text("\(trip.participants.count) \(trip.participants.count == 1 ? "person" : "people")")
-                    .font(.jakartaSans(14, weight: .medium))
-                    .foregroundColor(.gray)
-            }
-        }
-        .padding(16)
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .background(Color(.systemGray6).opacity(0.5))
-        .cornerRadius(16)
-    }
-    
-    private func formatDateRange(start: Date, end: Date) -> String {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "MMM d"
-        return "\(formatter.string(from: start)) - \(formatter.string(from: end))"
-    }
-}
-
-
-struct TripsView_Previews: PreviewProvider {
-    static var previews: some View {
-        TripsView()
     }
 }
