@@ -103,47 +103,6 @@ struct TripDetailView: View {
     }
 }
 
-// MARK: - Trip Header View
-
-struct TripHeaderView: View {
-    let trip: Trip
-    let dateRange: String
-    
-    var body: some View {
-        ZStack(alignment: .bottom) {
-            // Beach/destination image
-            Image("beach_destination") // Replace with your actual image asset
-                .resizable()
-                .aspectRatio(contentMode: .fill)
-                .frame(height: 220)
-                .clipped()
-                .accessibilityHidden(true)
-            
-            // Gradient overlay
-            LinearGradient(
-                gradient: Gradient(colors: [.clear, .black.opacity(0.6)]),
-                startPoint: .top,
-                endPoint: .bottom
-            )
-            .frame(height: 220)
-            .accessibilityHidden(true)
-            
-            // Title overlay
-            VStack(alignment: .leading, spacing: 8) {
-                Text(trip.name)
-                    .font(.jakartaSans(28, weight: .bold))
-                    .foregroundColor(.white)
-                
-                Text("\(dateRange) · \(trip.participants.count) Members")
-                    .font(.jakartaSans(16, weight: .medium))
-                    .foregroundColor(.white.opacity(0.9))
-            }
-            .padding(.horizontal, 20)
-            .padding(.bottom, 20)
-        }
-    }
-}
-
 // MARK: - Trip Countdown View
 
 struct TripCountdownView: View {
@@ -324,9 +283,7 @@ struct TripInfoView: View {
                         .resizable()
                         .aspectRatio(contentMode: .fill)
                 } else if phase.error != nil {
-                    Image("destination_photo_placeholder")
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
+                    DestinationImageView(destination: trip.destination, height: 220)
                 } else {
                     Rectangle()
                         .fill(Color.gray.opacity(0.2))
