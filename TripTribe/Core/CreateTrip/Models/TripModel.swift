@@ -17,7 +17,14 @@ import Foundation
 import Firebase
 import FirebaseFirestore
 
-struct Trip: Identifiable, Codable {
+struct Trip: Identifiable, Codable, Hashable {
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
+    
+    static func == (lhs: Trip, rhs: Trip) -> Bool {
+        return lhs.id == rhs.id
+    }
     var id: String
     let creatorId: String
     var name: String
