@@ -59,7 +59,7 @@ struct SignInView: View {
                         .progressViewStyle(CircularProgressViewStyle(tint: .white))
                         .frame(maxWidth: .infinity)
                         .frame(height: 56)
-                        .background(Color.black)
+                        .background(AppConstants.Colors.primary)
                         .cornerRadius(28)
                 } else {
                     Text("Log In")
@@ -67,7 +67,7 @@ struct SignInView: View {
                         .foregroundColor(.white)
                         .frame(maxWidth: .infinity)
                         .frame(height: 56)
-                        .background(Color.black)
+                        .background(AppConstants.Colors.primary)
                         .cornerRadius(28)
                 }
             }
@@ -85,7 +85,7 @@ struct SignInView: View {
                     .foregroundColor(.black)
                     .frame(maxWidth: .infinity)
                     .frame(height: 56)
-                    .background(Color(.systemGray5))
+                    .background(AppConstants.Colors.secondary)
                     .cornerRadius(28)
             }
         }

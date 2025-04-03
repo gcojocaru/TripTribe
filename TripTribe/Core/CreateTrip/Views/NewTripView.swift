@@ -27,7 +27,7 @@ struct NewTripView: View {
                     Text(errorMessage)
                         .foregroundColor(.white)
                         .padding()
-                        .background(Color.red.opacity(0.9))
+                        .background(AppConstants.Colors.error.opacity(0.9))
                         .cornerRadius(10)
                         .padding()
                         .onAppear {
@@ -98,7 +98,7 @@ struct TripDetailsView: View {
                                 .progressViewStyle(CircularProgressViewStyle(tint: .white))
                                 .frame(maxWidth: .infinity)
                                 .frame(height: 56)
-                                .background(Color.black)
+                                .background(AppConstants.Colors.primary)
                                 .cornerRadius(28)
                         } else {
                             Text("Continue")
@@ -106,7 +106,7 @@ struct TripDetailsView: View {
                                 .foregroundColor(.white)
                                 .frame(maxWidth: .infinity)
                                 .frame(height: 56)
-                                .background(Color.black)
+                                .background(AppConstants.Colors.primary)
                                 .cornerRadius(28)
                         }
                     }

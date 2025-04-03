@@ -57,7 +57,7 @@ struct SignUpView: View {
                         .progressViewStyle(CircularProgressViewStyle(tint: .white))
                         .frame(maxWidth: .infinity)
                         .frame(height: 56)
-                        .background(Color.black)
+                        .background(AppConstants.Colors.primary)
                         .cornerRadius(28)
                 } else {
                     Text("Create Account")
@@ -65,7 +65,7 @@ struct SignUpView: View {
                         .foregroundColor(.white)
                         .frame(maxWidth: .infinity)
                         .frame(height: 56)
-                        .background(Color.black)
+                        .background(AppConstants.Colors.primary)
                         .cornerRadius(28)
                 }
             }
@@ -83,7 +83,7 @@ struct SignUpView: View {
                     .foregroundColor(.black)
                     .frame(maxWidth: .infinity)
                     .frame(height: 56)
-                    .background(Color(.systemGray5))
+                    .background(AppConstants.Colors.secondary)
                     .cornerRadius(28)
             }
         }

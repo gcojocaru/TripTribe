@@ -26,7 +26,22 @@ protocol TripRepositoryProtocol {
 }
 
 class FirebaseTripRepository: TripRepositoryProtocol {
-    private let db = Firestore.firestore()
+    private let db: Firestore
+    
+    
+        init() {
+           // Configure Firestore settings
+           let settings = FirestoreSettings()
+           
+           // Set cache size to unlimited for better offline support
+           settings.cacheSizeBytes = FirestoreCacheSizeUnlimited
+           
+           // Apply settings to default instance (must be done before first access)
+           Firestore.firestore().settings = settings
+           
+           // Store reference to configured instance
+           db = Firestore.firestore()
+       }
     
     // MARK: - Trip Operations
     

@@ -38,7 +38,7 @@ struct AuthenticationView: View {
                                 .transition(.opacity)
                         }
                         
-                        Text("v0.2.0 | Privacy Policy")
+                        Text("v0.2.1 | Privacy Policy")
                             .font(.jakartaSans(14, weight: .bold))
                             .foregroundColor(.secondary)
                             .padding(.top, 50)

@@ -60,7 +60,7 @@ struct InviteFriendsView: View {
                                     .font(.system(size: 20, weight: .medium))
                                     .foregroundColor(.white)
                                     .frame(width: 40, height: 40)
-                                    .background(Color.black)
+                                    .background(AppConstants.Colors.primary)
                                     .clipShape(Circle())
                             }
                             .disabled(emailAddress.isEmpty || !isValidEmail(emailAddress))
@@ -180,7 +180,7 @@ struct InviteFriendsView: View {
                             .foregroundColor(.white)
                             .frame(maxWidth: .infinity)
                             .frame(height: 56)
-                            .background(Color.black)
+                            .background(AppConstants.Colors.primary)
                             .cornerRadius(28)
                     }
                     .padding(.top, 10)

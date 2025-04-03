@@ -21,7 +21,7 @@ class TripsViewModel: ObservableObject {
     
     private let tripRepository: TripRepositoryProtocol
     
-    init(tripRepository: TripRepositoryProtocol = FirebaseTripRepository()) {
+    init(tripRepository: TripRepositoryProtocol = AppDependencies.shared.tripRepository) {
         self.tripRepository = tripRepository
     }
     

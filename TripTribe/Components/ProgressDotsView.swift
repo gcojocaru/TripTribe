@@ -14,7 +14,7 @@ struct ProgressDotsView: View {
         HStack(spacing: 8) {
             ForEach(1...totalSteps, id: \.self) { step in
                 Circle()
-                    .fill(step <= currentStep ? Color.black : Color.gray.opacity(0.3))
+                    .fill(step <= currentStep ? AppConstants.Colors.primary : Color.gray.opacity(0.3))
                     .frame(width: 8, height: 8)
             }
         }

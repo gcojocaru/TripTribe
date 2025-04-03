@@ -12,21 +12,23 @@ struct HomeView<ViewModel: HomeViewModel>: View {
     
     var body: some View {
         NavigationView {
-            if let currentTrip = viewModel.currentTrip  {
-                TripDetailView(trip: currentTrip)
-            } else {
-                EmptyHomeView(username: authUsername) {
-                    viewModel.addTrip()
-                }
-                .navigationBarTitle("", displayMode: .inline)
-                .navigationBarHidden(true)
-                .fullScreenCover(isPresented: Binding<Bool>(
-                    get: { viewModel.isShowingNewTripView },
-                    set: { newValue in
-                        viewModel.isShowingNewTripView = newValue
+            SkeletonLoadingView(isLoading: viewModel.isLoading) {
+                if let currentTrip = viewModel.currentTrip  {
+                    TripDetailView(trip: currentTrip)
+                } else {
+                    EmptyHomeView(username: authUsername) {
+                        viewModel.addTrip()
                     }
-                )) {
-                    NewTripView(viewModel: NewTripViewModel(onDismiss: {viewModel.isShowingNewTripView = false}))
+                    .navigationBarTitle("", displayMode: .inline)
+                    .navigationBarHidden(true)
+                    .fullScreenCover(isPresented: Binding<Bool>(
+                        get: { viewModel.isShowingNewTripView },
+                        set: { newValue in
+                            viewModel.isShowingNewTripView = newValue
+                        }
+                    )) {
+                        NewTripView(viewModel: NewTripViewModel(onDismiss: {viewModel.isShowingNewTripView = false}))
+                    }
                 }
             }
         }

@@ -35,9 +35,10 @@ class AuthViewModel: ObservableObject {
     private let authRepository: AuthRepositoryProtocol
     private var cancellables = Set<AnyCancellable>()
     
+    
     // MARK: - Initialization
     
-    init(authRepository: AuthRepositoryProtocol) {
+    init(authRepository: AuthRepositoryProtocol = AppDependencies.shared.authRepository) {
         self.authRepository = authRepository
         setupAuthStateListener()
     }
