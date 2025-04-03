@@ -14,13 +14,17 @@ class AppDependencies {
     // Services
     let authRepository: AuthRepositoryProtocol
     let tripRepository: TripRepositoryProtocol
+    let activityRepository: ActivityRepositoryProtocol
+
     
     // Initialize with default implementations
     init(
         authRepository: AuthRepositoryProtocol = FirebaseAuthRepository(),
-        tripRepository: TripRepositoryProtocol = FirebaseTripRepository()
+        tripRepository: TripRepositoryProtocol = FirebaseTripRepository(),
+        activityRepository: ActivityRepositoryProtocol = FirebaseActivityRepository()
     ) {
         self.authRepository = authRepository
         self.tripRepository = tripRepository
+        self.activityRepository = activityRepository
     }
 }
