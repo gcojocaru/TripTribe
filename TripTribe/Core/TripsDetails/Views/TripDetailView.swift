@@ -46,7 +46,7 @@ struct TripDetailView: View {
                     TripQuickStartView(
                         onPlanActivities: viewModel.handlePlanActivities,
                         onTrackExpenses: viewModel.handleTrackExpenses,
-                        onSecureDocuments: viewModel.handleSecureDocuments
+                        onSecureDocuments: viewModel.handleSecureDocuments, trip: viewModel.trip
                     )
                 }
             }
@@ -345,6 +345,9 @@ struct TripQuickStartView: View {
     let onSecureDocuments: () -> Void
     
     @Environment(\.colorScheme) private var colorScheme
+    @State private var showingAddActivity = false
+    
+    var trip: Trip
     
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
@@ -357,10 +360,36 @@ struct TripQuickStartView: View {
             
             VStack(spacing: 12) {
                 quickStartButton(
-                    title: "Plan Activities",
-                    icon: "calendar",
-                    action: onPlanActivities
+                    title: "Add Activity",
+                    icon: "calendar.badge.plus",
+                    action: {
+                        showingAddActivity = true
+                    }
                 )
+                
+                NavigationLink(destination: TripActivitiesView(tripId: trip.id)) {
+                    HStack {
+                        Image(systemName: "calendar")
+                            .font(.system(size: 16, weight: .semibold))
+                            .foregroundColor(.white)
+                            .padding(.leading, 6)
+                        
+                        Text("Plan Activities")
+                            .font(.jakartaSans(16, weight: .semibold))
+                            .foregroundColor(.white)
+                        
+                        Spacer()
+                        
+                        Image(systemName: "chevron.right")
+                            .font(.system(size: 14, weight: .semibold))
+                            .foregroundColor(.white.opacity(0.7))
+                            .padding(.trailing, 6)
+                    }
+                    .frame(maxWidth: .infinity)
+                    .frame(height: 54)
+                    .background(colorScheme == .dark ? Color(.systemGray5) : Color.black)
+                    .cornerRadius(27)
+                }
                 
                 quickStartButton(
                     title: "Track Expenses",
@@ -376,6 +405,9 @@ struct TripQuickStartView: View {
             }
             .padding(.horizontal, 20)
             .padding(.bottom, 30)
+        }
+        .sheet(isPresented: $showingAddActivity) {
+            AddActivityView(tripId: trip.id)
         }
     }
     
