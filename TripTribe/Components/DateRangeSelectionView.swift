@@ -153,7 +153,7 @@ struct MinimalistCalendarView: View {
                                 .padding(.vertical, 6)
                                 .background(
                                     Capsule()
-                                        .fill(Color.black.opacity(0.05))
+                                        .fill(AppConstants.Colors.primary.opacity(0.05))
                                 )
                         }
                     }
@@ -168,7 +168,7 @@ struct MinimalistCalendarView: View {
                             .frame(height: 54)
                             .background(
                                 RoundedRectangle(cornerRadius: 27)
-                                    .fill(Color.black)
+                                    .fill(AppConstants.Colors.primary)
                             )
                     }
                     .padding(.horizontal, 20)
@@ -290,7 +290,7 @@ struct DayCell: View {
                 // Range background (needs to be behind everything)
                 if isInRange {
                     Rectangle()
-                        .fill(Color.black.opacity(0.08))
+                        .fill(AppConstants.Colors.primary.opacity(0.08))
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
                         .padding(.horizontal, -4) // Extend horizontally to connect with adjacent cells
                 }
@@ -298,11 +298,11 @@ struct DayCell: View {
                 // Selection or today indicator
                 if isSelected {
                     Circle()
-                        .fill(Color.black)
+                        .fill(AppConstants.Colors.primary)
                         .frame(width: 36, height: 36)
                 } else if isToday {
                     Circle()
-                        .strokeBorder(Color.black, lineWidth: 1)
+                        .strokeBorder(AppConstants.Colors.primary, lineWidth: 1)
                         .frame(width: 36, height: 36)
                 }
                 

@@ -16,7 +16,7 @@ struct ContinueButtonView: View {
                 .foregroundColor(.white)
                 .frame(maxWidth: .infinity)
                 .frame(height: 56)
-                .background(Color.black)
+                .background(AppConstants.Colors.primary)
                 .cornerRadius(28)
         }
     }

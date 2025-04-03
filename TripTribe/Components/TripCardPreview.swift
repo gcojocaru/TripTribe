@@ -95,7 +95,7 @@ struct TripCardPreview: View {
         }
         .background(Color.white)
         .cornerRadius(16)
-        .shadow(color: Color.black.opacity(0.1), radius: 8, x: 0, y: 2)
+        .shadow(color: AppConstants.Colors.primary.opacity(0.1), radius: 8, x: 0, y: 2)
     }
     
     // MARK: - Helper Views

@@ -24,7 +24,7 @@ struct PrimaryButtonModifier: ViewModifier {
             .foregroundColor(.white)
             .frame(maxWidth: .infinity)
             .frame(height: 56)
-            .background(Color.black)
+            .background(AppConstants.Colors.primary)
             .cornerRadius(28)
     }
 }
@@ -36,7 +36,7 @@ struct SecondaryButtonModifier: ViewModifier {
             .foregroundColor(.black)
             .frame(maxWidth: .infinity)
             .frame(height: 56)
-            .background(Color(.systemGray5))
+            .background(AppConstants.Colors.secondary)
             .cornerRadius(28)
     }
 }

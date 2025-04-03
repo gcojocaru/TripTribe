@@ -19,34 +19,36 @@ struct TripDetailView: View {
     
     var body: some View {
         ScrollView {
-            VStack(alignment: .leading, spacing: 0) {
-                TripHeaderView(trip: viewModel.trip, dateRange: viewModel.formattedDateRange())
-                
-                TripCountdownView(
-                    remainingTime: viewModel.remainingTime,
-                    status: viewModel.getTripStatus(),
-                    label: viewModel.getCountdownLabel()
-                )
-                
-                TripParticipantsView(
-                    trip: viewModel.trip,
-                    showDetails: $viewModel.showParticipantDetails,
-                    getInitials: viewModel.getInitials,
-                    getUserData: viewModel.getUserData,
-                    onToggleDetails: viewModel.toggleParticipantDetails,
-                    onInvite: viewModel.handleInvite
-                )
-                
-                TripInfoView(
-                    trip: viewModel.trip,
-                    progress: viewModel.tripProgress
-                )
-                
-                TripQuickStartView(
-                    onPlanActivities: viewModel.handlePlanActivities,
-                    onTrackExpenses: viewModel.handleTrackExpenses,
-                    onSecureDocuments: viewModel.handleSecureDocuments
-                )
+            SkeletonLoadingView(isLoading: viewModel.isLoading) {
+                VStack(alignment: .leading, spacing: 0) {
+                    TripHeaderView(trip: viewModel.trip, dateRange: viewModel.formattedDateRange())
+                    
+                    TripCountdownView(
+                        remainingTime: viewModel.remainingTime,
+                        status: viewModel.getTripStatus(),
+                        label: viewModel.getCountdownLabel()
+                    )
+                    
+                    TripParticipantsView(
+                        trip: viewModel.trip,
+                        showDetails: $viewModel.showParticipantDetails,
+                        getInitials: viewModel.getInitials,
+                        getUserData: viewModel.getUserData,
+                        onToggleDetails: viewModel.toggleParticipantDetails,
+                        onInvite: viewModel.handleInvite
+                    )
+                    
+                    TripInfoView(
+                        trip: viewModel.trip,
+                        progress: viewModel.tripProgress
+                    )
+                    
+                    TripQuickStartView(
+                        onPlanActivities: viewModel.handlePlanActivities,
+                        onTrackExpenses: viewModel.handleTrackExpenses,
+                        onSecureDocuments: viewModel.handleSecureDocuments
+                    )
+                }
             }
         }
         .ignoresSafeArea(edges: .top)
@@ -201,7 +203,7 @@ struct TripParticipantsView: View {
                     }
                     .padding(.horizontal, 16)
                     .padding(.vertical, 8)
-                    .background(Color(.systemGray5))
+                    .background(AppConstants.Colors.secondary)
                     .cornerRadius(16)
                 }
                 .accessibilityHint("Invite friends to join this trip")
@@ -398,7 +400,7 @@ struct TripQuickStartView: View {
             }
             .frame(maxWidth: .infinity)
             .frame(height: 54)
-            .background(colorScheme == .dark ? Color(.systemGray5) : Color.black)
+            .background(colorScheme == .dark ? AppConstants.Colors.secondary : AppConstants.Colors.primary)
             .cornerRadius(27)
         }
         .buttonStyle(ScaleButtonStyle())
@@ -410,7 +412,7 @@ struct TripQuickStartView: View {
 struct LoadingOverlayView: View {
     var body: some View {
         ZStack {
-            Color.black.opacity(0.3)
+            AppConstants.Colors.primary.opacity(0.3)
                 .edgesIgnoringSafeArea(.all)
             
             VStack(spacing: 16) {
@@ -445,7 +447,7 @@ struct ProgressBar: View {
                     .fill(Color.gray.opacity(0.2))
                 
                 RoundedRectangle(cornerRadius: 5)
-                    .fill(colorScheme == .dark ? Color.white : Color.black)
+                    .fill(colorScheme == .dark ? Color.white : AppConstants.Colors.primary)
                     .frame(width: min(CGFloat(self.value) * geometry.size.width, geometry.size.width))
             }
         }

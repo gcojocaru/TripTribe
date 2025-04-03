@@ -18,6 +18,6 @@ struct EmptyHomeView: View {
             }
         }
         .edgesIgnoringSafeArea(.top)
-        .background(Color(.systemBackground))
+        .background(AppConstants.Colors.background)
     }
 }

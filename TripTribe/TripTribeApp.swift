@@ -20,8 +20,15 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 @main
 struct TripTribeApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
-    @StateObject private var authViewModel = AuthViewModel()
-    @StateObject private var tripsViewModel = TripsViewModel()
+    
+    // Create dependencies using the shared container
+    @StateObject private var authViewModel = AuthViewModel(
+        authRepository: AppDependencies.shared.authRepository
+    )
+    
+    @StateObject private var tripsViewModel = TripsViewModel(
+        tripRepository: AppDependencies.shared.tripRepository
+    )
 
     var body: some Scene {
         WindowGroup {

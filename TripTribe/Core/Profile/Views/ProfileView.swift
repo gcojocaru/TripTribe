@@ -23,7 +23,7 @@ struct ProfileView: View {
                 }
                 .foregroundColor(.white)
                 .padding()
-                .background(Color.red)
+                .background(AppConstants.Colors.error)
                 .cornerRadius(10)
             }
             .navigationTitle("Profile")
