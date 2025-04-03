@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct NewTripView: View {
+    @Environment(\.dismiss) private var dismiss
+    @EnvironmentObject var coordinator: AppCoordinator
     @ObservedObject var viewModel: NewTripViewModel
     
     var body: some View {
@@ -59,6 +61,13 @@ struct NewTripView: View {
             }
         }
         .animation(.easeInOut, value: viewModel.currentStep)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                BackButton {
+                    coordinator.navigateBack()
+                }
+            }
+        }
     }
 }
 
@@ -68,8 +77,6 @@ struct TripDetailsView: View {
     
     var body: some View {
         VStack(spacing: 0) {
-            // Header
-            NewTripHeaderView(onBackTap: viewModel.dismissView)
 
             ScrollView {
                 // Progress Indicator

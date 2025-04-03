@@ -18,8 +18,8 @@ class NewTripViewModel: ObservableObject {
     @Published var tripName: String = ""
     @Published var destination: String = ""
     @Published var description: String = ""
-    @Published var startDate: Date?
-    @Published var endDate: Date?
+    @Published var startDate: Date = Date()
+    @Published var endDate: Date = Date().addingTimeInterval(86400 * 7) // 1 week
     
     // Step management
     @Published var currentStep: Int = 1
@@ -38,7 +38,7 @@ class NewTripViewModel: ObservableObject {
     private var onDismiss: () -> Void
     private let tripRepository: TripRepositoryProtocol
     
-    init(onDismiss: @escaping () -> Void, tripRepository: TripRepositoryProtocol = FirebaseTripRepository()) {
+    init(onDismiss: @escaping () -> Void, tripRepository: TripRepositoryProtocol = AppDependencies.shared.tripRepository) {
         self.onDismiss = onDismiss
         self.tripRepository = tripRepository
     }
@@ -68,8 +68,8 @@ class NewTripViewModel: ObservableObject {
             return false
         }
         
-        guard startDate != nil && endDate != nil else {
-            errorMessage = "Please select a date range"
+        guard endDate > startDate else {
+            errorMessage = "End date must be after start date"
             return false
         }
         
@@ -80,10 +80,6 @@ class NewTripViewModel: ObservableObject {
     // MARK: - Firebase Trip Creation
     
     private func createTripInFirebase() async {
-        guard let startDate = startDate, let endDate = endDate else {
-            errorMessage = "Please select valid dates"
-            return
-        }
         
         guard let userId = Auth.auth().currentUser?.uid else {
             errorMessage = "You must be logged in to create a trip"

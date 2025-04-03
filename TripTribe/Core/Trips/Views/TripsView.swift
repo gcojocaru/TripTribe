@@ -10,153 +10,147 @@ import SwiftUI
 import FirebaseAuth
 
 struct TripsView: View {
-    @State private var isShowingNewTripView = false
+    @EnvironmentObject private var coordinator: AppCoordinator
     @EnvironmentObject private var viewModel: TripsViewModel
 
     var body: some View {
-        NavigationView {
-            SkeletonLoadingView(isLoading: viewModel.isLoading) {
+        SkeletonLoadingView(isLoading: viewModel.isLoading) {
+            ZStack {
+                AppConstants.Colors.background.edgesIgnoringSafeArea(.all)
                 
-                ZStack {
-                    AppConstants.Colors.background.edgesIgnoringSafeArea(.all)
-                    
-                    if viewModel.isLoading {
-                        ProgressView()
-                            .progressViewStyle(CircularProgressViewStyle())
-                            .scaleEffect(1.5)
-                    } else if !viewModel.hasTrips && !viewModel.hasInvitations {
-                        // No trips yet
-                        VStack(spacing: 20) {
-                            Text("No trips yet")
-                                .font(.jakartaSans(22, weight: .bold))
-                            
-                            Text("Start planning your adventures with friends")
-                                .font(.jakartaSans(16, weight: .regular))
-                                .foregroundColor(.gray)
-                                .multilineTextAlignment(.center)
-                                .padding(.horizontal)
-                            
-                            Button(action: {
-                                isShowingNewTripView = true
-                            }) {
-                                Text("Create a Trip")
-                                    .font(.jakartaSans(16, weight: .semibold))
-                                    .foregroundColor(.white)
-                                    .padding(.vertical, 14)
-                                    .padding(.horizontal, 32)
-                                    .background(AppConstants.Colors.primary)
-                                    .cornerRadius(25)
-                            }
-                            .padding(.top, 20)
-                        }
-                    } else {
-                        // Has trips or invitations
-                        ScrollView {
-                            VStack(alignment: .leading, spacing: 24) {
-                                // Invitations section
-                                if viewModel.hasInvitations {
-                                    InvitationsSection(
-                                        invitations: viewModel.invitations,
-                                        onAccept: { tripId, invitationId in
-                                            Task {
-                                                await viewModel.respondToInvitation(
-                                                    tripId: tripId,
-                                                    invitationId: invitationId,
-                                                    accept: true
-                                                )
-                                            }
-                                        },
-                                        onDecline: { tripId, invitationId in
-                                            Task {
-                                                await viewModel.respondToInvitation(
-                                                    tripId: tripId,
-                                                    invitationId: invitationId,
-                                                    accept: false
-                                                )
-                                            }
-                                        }
-                                    )
-                                    .padding(.horizontal)
-                                }
-                                
-                                // Upcoming trips section
-                                if !viewModel.upcomingTrips.isEmpty {
-                                    TripsSectionView(
-                                        title: "Upcoming Trips",
-                                        trips: viewModel.upcomingTrips
-                                    )
-                                    .padding(.horizontal)
-                                }
-                                
-                                // Past trips section
-                                if !viewModel.pastTrips.isEmpty {
-                                    TripsSectionView(
-                                        title: "Past Trips",
-                                        trips: viewModel.pastTrips
-                                    )
-                                    .padding(.horizontal)
-                                }
-                                
-                                Spacer(minLength: 50)
-                            }
-                            .padding(.top)
-                        }
-                        .refreshable {
-                            await viewModel.refreshData()
-                        }
-                    }
-                    
-                    // Error message
-                    if let error = viewModel.errorMessage {
-                        VStack {
-                            Spacer()
-                            Text(error)
+                if viewModel.isLoading {
+                    ProgressView()
+                        .progressViewStyle(CircularProgressViewStyle())
+                        .scaleEffect(1.5)
+                } else if !viewModel.hasTrips && !viewModel.hasInvitations {
+                    // No trips yet
+                    VStack(spacing: 20) {
+                        Text("No trips yet")
+                            .font(.jakartaSans(22, weight: .bold))
+                        
+                        Text("Start planning your adventures with friends")
+                            .font(.jakartaSans(16, weight: .regular))
+                            .foregroundColor(.gray)
+                            .multilineTextAlignment(.center)
+                            .padding(.horizontal)
+                        
+                        Button(action: {
+                            coordinator.showAddTrip()
+                        }) {
+                            Text("Create a Trip")
+                                .font(.jakartaSans(16, weight: .semibold))
                                 .foregroundColor(.white)
-                                .padding()
-                                .background(Color.red.opacity(0.9))
-                                .cornerRadius(10)
-                                .padding()
+                                .padding(.vertical, 14)
+                                .padding(.horizontal, 32)
+                                .background(AppConstants.Colors.primary)
+                                .cornerRadius(25)
                         }
+                        .padding(.top, 20)
                     }
-                    
-                    // FAB for adding trips
-                    if viewModel.hasTrips {
-                        VStack {
-                            Spacer()
-                            HStack {
-                                Spacer()
-                                Button(action: {
-                                    isShowingNewTripView = true
-                                }) {
-                                    Image(systemName: "plus")
-                                        .font(.system(size: 24))
-                                        .foregroundColor(.white)
-                                        .frame(width: 60, height: 60)
-                                        .background(AppConstants.Colors.primary)
-                                        .clipShape(Circle())
-                                        .shadow(radius: 4)
-                                }
-                                .padding(.trailing, 25)
-                                .padding(.bottom, 25)
+                } else {
+                    // Has trips or invitations
+                    ScrollView {
+                        VStack(alignment: .leading, spacing: 24) {
+                            // Invitations section
+                            if viewModel.hasInvitations {
+                                InvitationsSection(
+                                    invitations: viewModel.invitations,
+                                    onAccept: { tripId, invitationId in
+                                        Task {
+                                            await viewModel.respondToInvitation(
+                                                tripId: tripId,
+                                                invitationId: invitationId,
+                                                accept: true
+                                            )
+                                        }
+                                    },
+                                    onDecline: { tripId, invitationId in
+                                        Task {
+                                            await viewModel.respondToInvitation(
+                                                tripId: tripId,
+                                                invitationId: invitationId,
+                                                accept: false
+                                            )
+                                        }
+                                    }
+                                )
+                                .padding(.horizontal)
                             }
+                            
+                            // Upcoming trips section
+                            if !viewModel.upcomingTrips.isEmpty {
+                                TripsSectionView(
+                                    title: "Upcoming Trips",
+                                    trips: viewModel.upcomingTrips,
+                                    onTripSelected: { trip in
+                                        coordinator.showTripDetail(trip)
+                                    }
+                                )
+                                .padding(.horizontal)
+                            }
+                            
+                            // Past trips section
+                            if !viewModel.pastTrips.isEmpty {
+                                TripsSectionView(
+                                    title: "Past Trips",
+                                    trips: viewModel.pastTrips,
+                                    onTripSelected: { trip in
+                                        coordinator.showTripDetail(trip)
+                                    }
+                                )
+                                .padding(.horizontal)
+                            }
+                            
+                            Spacer(minLength: 50)
                         }
+                        .padding(.top)
                     }
-                }
-            }
-            .navigationTitle("Trips")
-            .onAppear {
-                Task {
-                    await viewModel.refreshData()
-                }
-            }
-            .fullScreenCover(isPresented: $isShowingNewTripView) {
-                NewTripView(viewModel: NewTripViewModel(onDismiss: {
-                    isShowingNewTripView = false
-                    // Refresh trips after creating a new one
-                    Task {
+                    .refreshable {
                         await viewModel.refreshData()
                     }
-                }))
+                }
+                
+                // Error message
+                if let error = viewModel.errorMessage {
+                    VStack {
+                        Spacer()
+                        Text(error)
+                            .foregroundColor(.white)
+                            .padding()
+                            .background(Color.red.opacity(0.9))
+                            .cornerRadius(10)
+                            .padding()
+                    }
+                }
+                
+                // FAB for adding trips
+                if viewModel.hasTrips {
+                    VStack {
+                        Spacer()
+                        HStack {
+                            Spacer()
+                            Button(action: {
+                                coordinator.showAddTrip()
+                            }) {
+                                Image(systemName: "plus")
+                                    .font(.system(size: 24))
+                                    .foregroundColor(.white)
+                                    .frame(width: 60, height: 60)
+                                    .background(AppConstants.Colors.primary)
+                                    .clipShape(Circle())
+                                    .shadow(radius: 4)
+                            }
+                            .padding(.trailing, 25)
+                            .padding(.bottom, 25)
+                        }
+                    }
+                }
+            }
+        }
+        .navigationTitle("Trips")
+        .onAppear {
+            Task {
+                await viewModel.refreshData()
             }
         }
     }
@@ -266,6 +260,7 @@ struct InvitationCardView: View {
 struct TripsSectionView: View {
     let title: String
     let trips: [Trip]
+    let onTripSelected: (Trip) -> Void
     
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
@@ -273,9 +268,12 @@ struct TripsSectionView: View {
                 .font(.jakartaSans(20, weight: .bold))
             
             ForEach(trips) { trip in
-                NavigationLink(destination: TripDetailView(trip: trip)) {
+                Button {
+                    onTripSelected(trip)
+                } label: {
                     TripCardPreview(trip: trip)
                 }
+                .buttonStyle(PlainButtonStyle())
             }
         }
     }
