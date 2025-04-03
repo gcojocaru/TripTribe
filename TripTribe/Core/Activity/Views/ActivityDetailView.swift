@@ -5,10 +5,11 @@
 //  Created by Gheorghe Cojocaru on 03.04.2025.
 //
 
+
 import SwiftUI
 
 struct ActivityDetailView: View {
-    @Environment(\.dismiss) private var dismiss
+    @EnvironmentObject var coordinator: AppCoordinator
     let activity: Activity
     @State private var showingEditActivity = false
     
@@ -208,7 +209,7 @@ struct ActivityDetailView: View {
             
             ToolbarItem(placement: .navigationBarLeading) {
                 Button(action: {
-                    dismiss()
+                    coordinator.navigateBack()
                 }) {
                     Image(systemName: "arrow.left")
                         .font(.system(size: 16))
