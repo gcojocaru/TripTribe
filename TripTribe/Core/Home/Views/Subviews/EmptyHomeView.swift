@@ -14,7 +14,13 @@ struct EmptyHomeView: View {
             VStack(alignment: .leading, spacing: 0) {
                 HeaderImageView()
                 WelcomeMessageView(username: username)
-                EmptyStateView(onAddTripTap: onAddTripTap)
+                EmptyStateView(
+                    icon: "plus",
+                    title: "Add trip",
+                    message: "Tap to add your first trip",
+                    buttonTitle: "Add",
+                    action: onAddTripTap
+                )
             }
         }
         .edgesIgnoringSafeArea(.top)

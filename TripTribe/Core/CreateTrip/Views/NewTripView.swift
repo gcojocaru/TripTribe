@@ -74,6 +74,7 @@ struct NewTripView: View {
 // The first step view - extracted from the original NewTripView
 struct TripDetailsView: View {
     @ObservedObject var viewModel: NewTripViewModel
+    @EnvironmentObject var coordinator: AppCoordinator
     
     var body: some View {
         VStack(spacing: 0) {

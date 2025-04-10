@@ -345,6 +345,7 @@ struct TripQuickStartView: View {
     let onTrackExpenses: () -> Void
     let onSecureDocuments: () -> Void
     
+    @EnvironmentObject var coordinator: AppCoordinator
     @Environment(\.colorScheme) private var colorScheme
     @State private var showingAddActivity = false
     

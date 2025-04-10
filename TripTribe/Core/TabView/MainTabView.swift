@@ -7,14 +7,16 @@
 
 import SwiftUI
 
-struct MainTabView: View {
+// This is the old version of MainTabView - replaced by the one in AppRouter
+// Kept for reference but not used anymore
+struct MainTabViewOld: View {
     @EnvironmentObject var authViewModel: AuthViewModel
     @EnvironmentObject var tripsViewModel: TripsViewModel
     @State private var selectedTab = 0
     
     var body: some View {
         TabView(selection: $selectedTab) {
-            HomeView(viewModel: HomeViewModelImpl(), authUsername: authViewModel.user?.displayName ?? "")
+            HomeView()
                 .tabItem {
                     VStack {
                         Image(systemName: selectedTab == 0 ? "house.fill" : "house")
