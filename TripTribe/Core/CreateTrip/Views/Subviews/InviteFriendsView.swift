@@ -15,12 +15,7 @@ struct InviteFriendsView: View {
     
     var body: some View {
         VStack(spacing: 0) {
-            // Header
-            NewTripHeaderView(onBackTap: {
-                withAnimation {
-                    viewModel.currentStep = 1
-                }
-            })
+            // Progress indicator only, header is handled by parent view
             
             ScrollView {
                 // Progress Indicator

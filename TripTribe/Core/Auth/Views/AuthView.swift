@@ -10,6 +10,8 @@ import SwiftUI
 
 struct AuthenticationView: View {
     @State private var showingSignUp = false
+    @EnvironmentObject var authViewModel: AuthViewModel
+    @EnvironmentObject var coordinator: AppCoordinator
     
     var body: some View {
         ZStack {
@@ -52,6 +54,11 @@ struct AuthenticationView: View {
             .edgesIgnoringSafeArea(.top)
             .padding(.horizontal)
             .animation(.easeInOut, value: showingSignUp)
+        }
+        .onChange(of: authViewModel.isAuthenticated) { newValue in
+            if newValue {
+                coordinator.authState = .authenticated
+            }
         }
     }
 }

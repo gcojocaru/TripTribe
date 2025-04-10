@@ -9,7 +9,7 @@ import SwiftUI
 import PhotosUI
 
 struct AddActivityView: View {
-    @Environment(\.dismiss) private var dismiss
+    @EnvironmentObject var coordinator: AppCoordinator
     @StateObject private var viewModel: ActivityViewModel
     @State private var showingImagePicker = false
     @State private var selectedItem: PhotosPickerItem?
@@ -258,7 +258,7 @@ struct AddActivityView: View {
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button(action: {
-                        dismiss()
+                        coordinator.navigateBack()
                     }) {
                         Image(systemName: "xmark")
                             .font(.system(size: 16, weight: .medium))
@@ -278,7 +278,7 @@ struct AddActivityView: View {
             .onAppear {
                 // Set the dismiss handler
                 viewModel.onDismiss = {
-                    dismiss()
+                    coordinator.navigateBack()
                 }
             }
         }

@@ -11,6 +11,7 @@ import SwiftUI
 // MARK: - Main Trip Detail View
 
 struct TripDetailView: View {
+    @EnvironmentObject var coordinator: AppCoordinator
     @StateObject private var viewModel: TripDetailViewModel
     
     init(trip: Trip) {
@@ -344,6 +345,7 @@ struct TripQuickStartView: View {
     let onTrackExpenses: () -> Void
     let onSecureDocuments: () -> Void
     
+    @EnvironmentObject var coordinator: AppCoordinator
     @Environment(\.colorScheme) private var colorScheme
     @State private var showingAddActivity = false
     
@@ -367,7 +369,9 @@ struct TripQuickStartView: View {
                     }
                 )
                 
-                NavigationLink(destination: TripActivitiesView(tripId: trip.id)) {
+                Button {
+                    coordinator.showTripActivities(tripId: trip.id)
+                } label: {
                     HStack {
                         Image(systemName: "calendar")
                             .font(.system(size: 16, weight: .semibold))
@@ -406,8 +410,11 @@ struct TripQuickStartView: View {
             .padding(.horizontal, 20)
             .padding(.bottom, 30)
         }
-        .sheet(isPresented: $showingAddActivity) {
-            AddActivityView(tripId: trip.id)
+        .onChange(of: showingAddActivity) { newValue in
+            if newValue {
+                coordinator.showAddActivity(tripId: trip.id)
+                showingAddActivity = false
+            }
         }
     }
     

@@ -8,8 +8,9 @@
 import SwiftUI
 
 struct MinimalistCalendarView: View {
-    @Binding var startDate: Date?
-    @Binding var endDate: Date?
+    // Support both optional and non-optional date bindings
+    @Binding var startDate: Date
+    @Binding var endDate: Date
     @State private var currentMonth: Date
     @Environment(\.dismiss) private var dismiss
     
@@ -17,10 +18,25 @@ struct MinimalistCalendarView: View {
     private let daySymbols = Calendar.current.veryShortWeekdaySymbols
     private let columns = Array(repeating: GridItem(.flexible()), count: 7)
     
-    init(startDate: Binding<Date?>, endDate: Binding<Date?>) {
+    // Init for non-optional dates
+    init(startDate: Binding<Date>, endDate: Binding<Date>) {
         self._startDate = startDate
         self._endDate = endDate
-        self._currentMonth = State(initialValue: Date())
+        self._currentMonth = State(initialValue: startDate.wrappedValue)
+    }
+    
+    // Init for optional dates (kept for backward compatibility)
+    init(startDate: Binding<Date?>, endDate: Binding<Date?>) {
+        // Create a non-optional binding with a default value
+        self._startDate = Binding<Date>(
+            get: { startDate.wrappedValue ?? Date() },
+            set: { startDate.wrappedValue = $0 }
+        )
+        self._endDate = Binding<Date>(
+            get: { endDate.wrappedValue ?? Date().addingTimeInterval(86400) },
+            set: { endDate.wrappedValue = $0 }
+        )
+        self._currentMonth = State(initialValue: startDate.wrappedValue ?? Date())
     }
     
     var body: some View {
@@ -123,59 +139,48 @@ struct MinimalistCalendarView: View {
             Spacer()
             
             // Date range summary
-            if let start = startDate {
-                VStack(spacing: 24) {
-                    Divider()
-                        .padding(.top, 16)
-                    
-                    HStack {
-                        VStack(alignment: .leading, spacing: 4) {
-                            Text("YOUR TRIP")
-                                .font(.jakartaSans(12, weight: .medium))
-                                .foregroundColor(.gray)
-                            
-                            if let end = endDate {
-                                Text("\(formattedDate(start)) - \(formattedDate(end))")
-                                    .font(.jakartaSans(16, weight: .semibold))
-                            } else {
-                                Text("\(formattedDate(start)) - Select end date")
-                                    .font(.jakartaSans(16, weight: .semibold))
-                            }
-                        }
+            VStack(spacing: 24) {
+                Divider()
+                    .padding(.top, 16)
+                
+                HStack {
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text("YOUR TRIP")
+                            .font(.jakartaSans(12, weight: .medium))
+                            .foregroundColor(.gray)
                         
-                        Spacer()
-                        
-                        if let end = endDate {
-                            let days = daysBetween(start: start, end: end)
-                            Text("\(days) \(days == 1 ? "day" : "days")")
-                                .font(.jakartaSans(14, weight: .semibold))
-                                .padding(.horizontal, 12)
-                                .padding(.vertical, 6)
-                                .background(
-                                    Capsule()
-                                        .fill(AppConstants.Colors.primary.opacity(0.05))
-                                )
-                        }
-                    }
-                    .padding(.horizontal, 20)
-                    
-                    // Continue button
-                    Button(action: { dismiss() }) {
-                        Text("Continue")
+                        Text("\(formattedDate(startDate)) - \(formattedDate(endDate))")
                             .font(.jakartaSans(16, weight: .semibold))
-                            .foregroundColor(.white)
-                            .frame(maxWidth: .infinity)
-                            .frame(height: 54)
-                            .background(
-                                RoundedRectangle(cornerRadius: 27)
-                                    .fill(AppConstants.Colors.primary)
-                            )
                     }
-                    .padding(.horizontal, 20)
-                    .padding(.bottom, 24)
-                    .disabled(endDate == nil)
-                    .opacity(endDate == nil ? 0.6 : 1.0)
+                    
+                    Spacer()
+                    
+                    let days = daysBetween(start: startDate, end: endDate)
+                    Text("\(days) \(days == 1 ? "day" : "days")")
+                        .font(.jakartaSans(14, weight: .semibold))
+                        .padding(.horizontal, 12)
+                        .padding(.vertical, 6)
+                        .background(
+                            Capsule()
+                                .fill(AppConstants.Colors.primary.opacity(0.05))
+                        )
                 }
+                .padding(.horizontal, 20)
+                
+                // Continue button
+                Button(action: { dismiss() }) {
+                    Text("Continue")
+                        .font(.jakartaSans(16, weight: .semibold))
+                        .foregroundColor(.white)
+                        .frame(maxWidth: .infinity)
+                        .frame(height: 54)
+                        .background(
+                            RoundedRectangle(cornerRadius: 27)
+                                .fill(AppConstants.Colors.primary)
+                        )
+                }
+                .padding(.horizontal, 20)
+                .padding(.bottom, 24)
             }
         }
     }
@@ -234,36 +239,31 @@ struct MinimalistCalendarView: View {
     }
     
     private func isDateSelected(_ date: Date) -> Bool {
-        if let start = startDate, calendar.isDate(date, inSameDayAs: start) {
+        if calendar.isDate(date, inSameDayAs: startDate) {
             return true
         }
-        if let end = endDate, calendar.isDate(date, inSameDayAs: end) {
+        if calendar.isDate(date, inSameDayAs: endDate) {
             return true
         }
         return false
     }
     
     private func isDateInRange(_ date: Date) -> Bool {
-        guard let start = startDate, let end = endDate else { return false }
-        return date > start && date < end
+        return date > startDate && date < endDate
     }
     
     private func selectDate(_ date: Date) {
-        if startDate == nil || (startDate != nil && endDate != nil) {
-            // Start new selection
+        if calendar.isDate(date, inSameDayAs: startDate) && calendar.isDate(date, inSameDayAs: endDate) {
+            // Both dates are the same, just update the end date
+            endDate = calendar.date(byAdding: .day, value: 1, to: date) ?? date
+        } else if calendar.isDate(date, inSameDayAs: startDate) {
+            // Tapped the start date, do nothing
+        } else if date < startDate {
+            // Selected a date before start, make it the new start
             startDate = date
-            endDate = nil
-        } else if let start = startDate {
-            if calendar.isDate(date, inSameDayAs: start) {
-                // Tapped the same date again, do nothing
-            } else if date < start {
-                // Selected a date before start, make it the new start
-                startDate = date
-                endDate = nil
-            } else {
-                // Complete the range
-                endDate = date
-            }
+        } else {
+            // Complete the range
+            endDate = date
         }
     }
     

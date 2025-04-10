@@ -7,8 +7,8 @@
 import SwiftUI
 
 struct DateRangeFieldView: View {
-    @Binding var startDate: Date?
-    @Binding var endDate: Date?
+    @Binding var startDate: Date
+    @Binding var endDate: Date
     @State private var isShowingCalendar = false
     
     var body: some View {
@@ -23,7 +23,7 @@ struct DateRangeFieldView: View {
                 HStack {
                     Text(getFormattedDateRange())
                         .font(.jakartaSans(16, weight: .regular))
-                        .foregroundColor(startDate == nil ? .gray : .black)
+                        .foregroundColor(.black)
                         .padding(16)
                     
                     Spacer()
@@ -33,17 +33,15 @@ struct DateRangeFieldView: View {
                 .cornerRadius(12)
             }
             .sheet(isPresented: $isShowingCalendar) {
+                // Work with non-optional dates since our model now uses non-optional dates
                 MinimalistCalendarView(startDate: $startDate, endDate: $endDate)
             }
         }
     }
     
     private func getFormattedDateRange() -> String {
-        if let start = startDate, let end = endDate {
-            let formatter = DateFormatter()
-            formatter.dateFormat = "MMM d"
-            return "\(formatter.string(from: start)) - \(formatter.string(from: end))"
-        }
-        return "Select Date Range"
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MMM d"
+        return "\(formatter.string(from: startDate)) - \(formatter.string(from: endDate))"
     }
 }

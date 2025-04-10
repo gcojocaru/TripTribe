@@ -15,7 +15,7 @@
 import SwiftUI
 
 struct TripActivitiesView: View {
-    @Environment(\.dismiss) private var dismiss
+    @EnvironmentObject var coordinator: AppCoordinator
     @StateObject private var viewModel: TripActivitiesViewModel
     @State private var showingAddActivity = false
     @State private var selectedActivity: Activity?
@@ -25,7 +25,7 @@ struct TripActivitiesView: View {
     }
     
     var body: some View {
-        NavigationStack {
+        // Using parent navigation stack from coordinator
             ZStack {
                 ScrollView {
                     VStack(alignment: .leading, spacing: 24) {
@@ -72,30 +72,26 @@ struct TripActivitiesView: View {
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button(action: {
-                        dismiss()
+                        coordinator.navigateBack()
                     }) {
                         Image(systemName: "arrow.left")
                             .font(.system(size: 16, weight: .medium))
                     }
                 }
             }
-            .sheet(isPresented: $showingAddActivity) {
-                if let tripId = viewModel.trip?.id {
-                    AddActivityView(tripId: tripId)
-                        .onDisappear {
-                            Task {
-                                await viewModel.loadActivities()
-                            }
-                        }
+            .onChange(of: showingAddActivity) { newValue in
+                if newValue {
+                    if let tripId = viewModel.trip?.id {
+                        coordinator.showAddActivity(tripId: tripId)
+                        showingAddActivity = false
+                    }
                 }
             }
-            .sheet(item: $selectedActivity) { activity in
-                ActivityDetailView(activity: activity)
-                    .onDisappear {
-                        Task {
-                            await viewModel.loadActivities()
-                        }
-                    }
+            .onChange(of: selectedActivity) { activity in
+                if let activity = activity {
+                    coordinator.showActivityDetail(activity)
+                    selectedActivity = nil
+                }
             }
             .alert(isPresented: Binding<Bool>(
                 get: { viewModel.errorMessage != nil },
@@ -114,7 +110,7 @@ struct TripActivitiesView: View {
                 }
             }
         }
-    }
+    
 }
 
 // Trip Summary Header

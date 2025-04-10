@@ -11,31 +11,23 @@ import Firebase
 import FirebaseAuth
 
 protocol HomeViewModel: ObservableObject {
-    var isShowingNewTripView: Bool { get set }
     var currentTrip: Trip? { get }
     var isLoading: Bool { get }
     var errorMessage: String? { get }
     
-    func addTrip()
     func fetchCurrentTrip() async
     func refreshData() async
 }
 
 class HomeViewModelImpl: HomeViewModel {
-    @Published var isShowingNewTripView: Bool = false
     @Published var currentTrip: Trip? = nil
     @Published var isLoading: Bool = false
     @Published var errorMessage: String? = nil
     
     private let tripRepository: TripRepositoryProtocol
     
-    init(tripRepository: TripRepositoryProtocol = FirebaseTripRepository()) {
+    init(tripRepository: TripRepositoryProtocol) {
         self.tripRepository = tripRepository
-    }
-    
-    func addTrip() {
-        print("Add trip")
-        isShowingNewTripView = true
     }
     
     @MainActor
